@@ -8,9 +8,9 @@ exports.recordList = [
         try {
             //request payload parsing and validation
             var startDate = new Date(Date.parse(req.body.startDate));
-            var endDate = new Date(Date.parse(req.body.endDate))
-            var minCount = req.body.minCount;
-            var maxCount = req.body.maxCount;
+            var endDate = new Date(Date.parse(req.body.endDate));
+            var minCount = parseInt(req.body.minCount);
+            var maxCount = parseInt(req.body.maxCount);
 
             //Record filtering and aggregation for count array sum
             Record.aggregate(
