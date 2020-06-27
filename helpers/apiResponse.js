@@ -1,3 +1,4 @@
+//Helper functions for http response formatting
 exports.successResponseWithData = function (res, msg, data) {
     var resBody={
         code:0,

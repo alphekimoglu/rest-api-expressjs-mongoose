@@ -5,17 +5,18 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require("mongoose");
 
-var MONGODB_URL = process.env.MONGODB_URL
+//MongoDb connection with mongoose
+var MONGODB_URL = process.env.MONGODB_URL //Add MongoDb URI as env variable before start
 mongoose.connect(MONGODB_URL, {useNewUrlParser: true, useUnifiedTopology:true});
 mongoose.set('debug', true);
 
-require('./models/Record')
-
+//Routing modules
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var recordsRouter = require('./routes/records');
 
 var app = express();
+//App default port, better to use as env variable or development config value for further improvemnts
 var port = 3000;
 
 // view engine setup

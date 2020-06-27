@@ -2,14 +2,17 @@ var Record = require("../models/Record")
 var apiResponse = require("../helpers/apiResponse");
 //var { body, validationResult } = require('express-validator');
 
+//records router controller
 exports.recordList = [
     function (req,res) {
         try {
+            //request payload parsing and validation
             var startDate = new Date(Date.parse(req.body.startDate));
             var endDate = new Date(Date.parse(req.body.endDate))
             var minCount = req.body.minCount;
             var maxCount = req.body.maxCount;
 
+            //Record filtering and aggregation for count array sum
             Record.aggregate(
                 [
                     {$match: {"createdAt":{$gte:startDate,$lte:endDate}}},
@@ -29,6 +32,7 @@ exports.recordList = [
                     },
                     {$match: {"totalCount":{$gte:minCount,$lte:maxCount}}}
                 ],
+                //error handling for data fetch errors
                 function(err, result) {
                     if (err) {
                         return apiResponse.errorResponse(res,err.message,500);
@@ -38,6 +42,7 @@ exports.recordList = [
                 }
             )
         }catch (e) {
+            //error handling for controller function
             return apiResponse.errorResponse(res,e.message,500)
         }
     }

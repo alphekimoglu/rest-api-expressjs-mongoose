@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 
+//Record model for records in given MongoDb collection
 var RecordSchema = new mongoose.Schema({
     key:{type:String, required: true},
     totalCount: {type:Number, required:true},
