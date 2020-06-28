@@ -1,16 +1,34 @@
 var Record = require("../models/Record")
 var apiResponse = require("../helpers/apiResponse");
-//var { body, validationResult } = require('express-validator');
 
 //records router controller
 exports.recordList = [
     function (req,res) {
         try {
-            //request payload parsing and validation
-            var startDate = new Date(Date.parse(req.body.startDate));
-            var endDate = new Date(Date.parse(req.body.endDate));
-            var minCount = parseInt(req.body.minCount);
-            var maxCount = parseInt(req.body.maxCount);
+            /*
+            request payload parsing and validation
+            Express-validator can be implemented to project for further improvement
+            */
+            if (!Date.parse(req.body.startDate)){
+                return apiResponse.errorResponse(res,"startDate is not a valid Date",500);
+            }else{
+                var startDate = new Date(Date.parse(req.body.startDate));
+            }
+            if (!Date.parse(req.body.endDate)){
+                return apiResponse.errorResponse(res,"endDate is not a valid Date",500);
+            }else{
+                var endDate = new Date(Date.parse(req.body.endDate));
+            }
+            if (!Date.parse(req.body.minCount)){
+                return apiResponse.errorResponse(res,"minCount is not a valid Integer",500);
+            }else{
+                var minCount = parseInt(req.body.minCount);
+            }
+            if (!Date.parse(req.body.maxCount)){
+                return apiResponse.errorResponse(res,"maxCount is not a valid Integer",500);
+            }else{
+                var maxCount = parseInt(req.body.maxCount);
+            }
 
             //Record filtering and aggregation for count array sum
             Record.aggregate(
